@@ -1,0 +1,90 @@
+import { Client, Events, GatewayIntentBits, Collection } from 'discord.js';
+import fs from 'node:fs';
+import path from 'node:path';
+import config from '../../config/config.json' with { type: 'json' };
+import logger from '../logger.js';
+import {main} from "./commands.js";
+import { pathToFileURL } from 'url';
+
+
+const client = new Client({
+  intents: [GatewayIntentBits.Guilds]
+});
+
+client.commands = new Collection();
+
+
+
+const loadModulesFromBase = async (basePath) => {
+  if (!fs.existsSync(basePath)) return;
+
+  const moduleFolders = fs.readdirSync(basePath);
+
+  for (const moduleFolder of moduleFolders) {
+    const modulePath = path.join(basePath, moduleFolder);
+
+    // --- Cargar comandos ---
+    const commandsPath = path.join(modulePath, 'commands');
+    if (fs.existsSync(commandsPath) && fs.statSync(commandsPath).isDirectory()) {
+      const commandFiles = fs.readdirSync(commandsPath).filter(file => file.endsWith('.js'));
+
+      for (const file of commandFiles) {
+        const filePath = path.join(commandsPath, file);
+        logger.debug(`Loading command: ${file}`);
+        try {
+          const commandModule = await import(pathToFileURL(filePath).href);
+          const command = commandModule.default;
+          if ('data' in command && 'execute' in command) {
+            client.commands.set(command.data.name, command); // Registra en el cliente
+          } else {
+            logger.warn(`Command at ${filePath} is missing "data" or "execute".`);
+          }
+        } catch (err) {
+          logger.error(`Failed to load command at ${filePath}: ${err}`);
+        }
+      }
+    }
+
+    // --- Cargar eventos ---
+    const eventsPath = path.join(modulePath, 'events');
+    if (fs.existsSync(eventsPath) && fs.statSync(eventsPath).isDirectory()) {
+      const eventFiles = fs.readdirSync(eventsPath).filter(file => file.endsWith('.js'));
+
+      for (const file of eventFiles) {
+        const filePath = path.join(eventsPath, file);
+        try {
+          const eventModule = await import(pathToFileURL(filePath).href);
+          const event = eventModule.default;
+
+          if (!event || !event.name || typeof event.execute !== 'function') {
+            logger.warn(`Event at ${filePath} is missing "name" or "execute" property.`);
+            continue;
+          }
+
+          if (event.once) {
+            client.once(event.name, (...args) => event.execute(...args, client));
+          } else {
+            client.on(event.name, (...args) => event.execute(...args, client));
+          }
+
+          logger.debug(`Loaded event: ${event.name}`);
+        } catch (err) {
+          logger.error(`Failed to load event at ${filePath}: ${err}`);
+        }
+      }
+    }
+  }
+};
+
+
+export const init = async () => {
+  main();
+  await loadModulesFromBase(path.join(import.meta.dirname, '../.tmp_modules'));
+
+
+  await client.login(config.token);
+};
+
+
+
+export const discord_client = client;
