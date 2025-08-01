@@ -5,6 +5,7 @@ import logger from "../logger.js";
 import {discord_client} from "../bot/client.js";
 import { fileURLToPath, pathToFileURL } from 'url';
 import config from "../../config/config.json" with { type: "json" };
+import { installPackage } from './installer.js';
 
 const MODULES_DIR = './modules';
 const TEMP_DIR = './core/.tmp_modules';
@@ -75,6 +76,7 @@ function createApi(moduleName) {
         client: discord_client,
         config,
         resourceConfig: getModuleConfig(moduleName),
-        moduleList
+        moduleList,
+        installPackage
     };
 }
