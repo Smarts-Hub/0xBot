@@ -24,17 +24,27 @@ export async function run() {
             const extractPath = path.join(TEMP_DIR, moduleName);
 
             const zip = new AdmZip(fullPath);
-            zip.extractAllTo(extractPath, true);
+            await zip.extractAllTo(extractPath, true);
+            logger.debug("Module unzipped")
 
             const moduleConfigPath = path.join(extractPath, 'config.json');
+            
             const destinationConfigPath = path.join(CONFIG_DIR, `${moduleName}_config.json`);
-            if(fs.readFile(destinationConfigPath)) return;
+            logger.debug(moduleConfigPath + " - " + destinationConfigPath)
             try {
-                await fs.copyFile(moduleConfigPath, destinationConfigPath);
-                logger.debug(`Copied config for ${moduleName} to ${destinationConfigPath}`);
-            } catch (err) {
-                logger.warn(`No config.json found for module ${moduleName} or failed to copy: ${err.message}`);
+                await fs.access(destinationConfigPath);
+                return; 
+            } catch {
+                // If it throws an error, file does not exists
+                try { 
+                    logger.debug("Copying")
+                    await fs.copyFile(moduleConfigPath, destinationConfigPath);
+                    logger.debug(`Copied config for ${moduleName} to ${destinationConfigPath}`);
+                } catch (err) {
+                    logger.warn(`No config.json found for module ${moduleName} or failed to copy: ${err.message}`);
+                }
             }
+            
         }
     }
 
