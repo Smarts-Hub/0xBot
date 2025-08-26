@@ -19,6 +19,7 @@ const loadModulesFromBase = async (basePath) => {
   if (!fs.existsSync(basePath)) return;
 
   const moduleFolders = fs.readdirSync(basePath);
+  logger.debug(`Found module folders: ${moduleFolders.join(', ')}`);
 
   for (const moduleFolder of moduleFolders) {
     const modulePath = path.join(basePath, moduleFolder);
@@ -79,7 +80,7 @@ const loadModulesFromBase = async (basePath) => {
 
 export const init = async () => {
   main();
-  await loadModulesFromBase(path.join(import.meta.dirname, '../.tmp_modules'));
+  await loadModulesFromBase(path.join(import.meta.dirname, '../../modules'));
 
 
   await client.login(config.token);

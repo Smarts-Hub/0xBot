@@ -52,7 +52,7 @@ const loadCommandsFromTmpModules = async (basePath) => {
 
 
 export const main = async () => {
-  await loadCommandsFromTmpModules(path.join(import.meta.dirname, '../.tmp_modules'));
+  await loadCommandsFromTmpModules(path.join(import.meta.dirname, '../../modules'));
 
   const rest = new REST().setToken(token);
 
