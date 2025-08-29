@@ -1,15 +1,15 @@
 import { exec } from "node:child_process";
-import { restart } from "./restarter.js";
 
-export async function installPackage(packageName, autorestart) {
-  return new Promise((resolve, reject) => {
-    exec(`npm install ${packageName}`, async (error, stdout, stderr) => {
+export async function installPackage(packageName) {
+  await new Promise((resolve, reject) => {
+    exec(`npm install ${packageName}`, (error, stdout, stderr) => {
       if (error) return reject(error.message);
       if (stderr) return reject(stderr);
-      
-      if (autorestart) await restart();
-
+      console.log(stdout);
       resolve(stdout);
     });
   });
+
+  const freshModule = await import(`${packageName}?update=${Date.now()}`);
+  return freshModule;
 }
