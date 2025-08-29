@@ -6,6 +6,8 @@ import {discord_client} from "../bot/client.js";
 import { fileURLToPath, pathToFileURL } from 'url';
 import config from "../../config/config.json" with { type: "json" };
 import { installPackage } from './installer.js';
+import { restart } from './restarter.js';
+
 
 const MODULES_DIR = './modules';
 const CONFIG_DIR = './config';
@@ -52,6 +54,7 @@ function createApi(moduleName) {
         config,
         resourceConfig: getModuleConfig(moduleName),
         moduleList,
-        installPackage
+        installPackage,
+        restart
     };
 }
