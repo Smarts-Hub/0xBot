@@ -46,7 +46,6 @@ export async function getModuleConfig(moduleName) {
 }
 
 function createApi(moduleName) {
-    
     return {
         logger: logger,
         client: discord_client,
