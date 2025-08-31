@@ -1,0 +1,7 @@
+{
+    "name": "_internal",
+    "version": "0",
+    "author": "jallox",
+    "main": "index.js",
+    "description": "Internal module for 0xBot. Do not edit or delete this module, it contains important features for the bot."
+}

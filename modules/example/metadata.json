@@ -1,0 +1,7 @@
+{
+    "name": "Example Module",
+    "version": "1.0.0",
+    "author": "jallox",
+    "main": "index.js",
+    "description": "An example module for 0xBot. You can use this as a template for your own modules. Learn more at https://docs.smartshub.dev/0xbot"
+}
