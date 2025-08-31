@@ -1,9 +1,8 @@
 import fs from 'fs/promises';
 import path from 'path';
-import AdmZip from 'adm-zip';
 import logger from "../logger.js";
 import {discord_client} from "../bot/client.js";
-import { fileURLToPath, pathToFileURL } from 'url';
+import { pathToFileURL } from 'url';
 import config from "../../config/config.json" with { type: "json" };
 import { installPackage } from './installer.js';
 import { restart } from './restarter.js';
@@ -12,14 +11,15 @@ import { restart } from './restarter.js';
 const MODULES_DIR = './modules';
 const CONFIG_DIR = './config';
 
+
 var moduleList = new Array;
+var moduleMetadataList = new Array;
 
 export async function run() {
 
     const modules = await fs.readdir(MODULES_DIR);
     for (const module_ of modules) {
         const moduleName = path.basename(module_);
-        moduleList.push(moduleName)
         const modulePath = path.join(MODULES_DIR, moduleName);
 
         const metadataRaw = await fs.readFile(path.join(modulePath, 'metadata.json'), 'utf-8');
@@ -29,9 +29,13 @@ export async function run() {
 
         const mainPath = path.join(modulePath, metadata.main);
         const module = await import(pathToFileURL(mainPath).href);
+        
         logger.info("Loaded module " + moduleName + " by " + author);
+        moduleList.push(moduleName)
+        moduleMetadataList.push(metadata)
         if (typeof module.run === 'function') {
             module.run(createApi(moduleName));
+            
         }
     }
 }
@@ -54,6 +58,7 @@ function createApi(moduleName) {
         config,
         resourceConfig: getModuleConfig(moduleName),
         moduleList,
+        moduleMetadataList,
         installPackage,
         restart
     };
