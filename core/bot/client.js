@@ -72,11 +72,12 @@ const loadModulesFromBase = async (basePath) => {
 
           if (event.once) {
             client.once(event.name, (...args) => event.execute(...args, client));
+            logger.debug(`Event registered: ${event.name} (once)`);
           } else {
             client.on(event.name, (...args) => event.execute(...args, client));
+            logger.debug(`Event registered: ${event.name}`);
           }
 
-          logger.debug(`Loaded event: ${event.name}`);
         } catch (err) {
           logger.error(`Failed to load event at ${filePath}: ${err}`);
         }
