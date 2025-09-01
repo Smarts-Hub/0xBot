@@ -14,6 +14,8 @@ import fs from "node:fs";
 import path from "node:path";
 import { run } from "./core/modules/loader.js";
 import { init } from "./core/bot/client.js";
+import {connectMongoose} from "./core/storage/mongodb.js";
+
 
 logger.info("Starting 0xBot...");
 
@@ -42,6 +44,7 @@ start()
 
 async function start() {
     logger.debug("Debug is enabled! Showing debug information.");
+    await connectMongoose();
     await run();
     await init();
 }
