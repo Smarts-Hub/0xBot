@@ -1,3 +1,13 @@
+/*
+ * 0xBot - Fully modular discord bot 
+ *
+ * * This bot offers the ability to create a discord bot fully customizable through modules.
+ * * You can get information about the bot's functionality and how to use it in the documentation.
+ *   * https://docs.smartshub.dev/0xbot
+ *
+ * 0xBot is licensed under the MIT License.
+ */
+
 import { REST, Routes } from 'discord.js';
 import config from '../../config/config.json' with { type: 'json' };
 import fs from 'node:fs';
@@ -8,9 +18,6 @@ import { pathToFileURL } from 'node:url';
 const { clientId, guildId, token } = config;
 const commands = [];
 
-/**
- * Carga comandos desde una carpeta `commands` dentro de cada subcarpeta de basePath
- */
 const loadCommandsFromTmpModules = async (basePath) => {
   if (!fs.existsSync(basePath)) return;
 
@@ -21,8 +28,6 @@ const loadCommandsFromTmpModules = async (basePath) => {
     const modulePath = path.join(basePath, moduleFolder);
     const commandsPath = path.join(modulePath, 'commands');
 
-
-    // Verifica que existe y es carpeta
     if (fs.existsSync(commandsPath) && fs.statSync(commandsPath).isDirectory()) {
 
         const subfolderPath = path.join(commandsPath);

@@ -1,3 +1,13 @@
+/*
+ * 0xBot - Fully modular discord bot 
+ *
+ * * This bot offers the ability to create a discord bot fully customizable through modules.
+ * * You can get information about the bot's functionality and how to use it in the documentation.
+ *   * https://docs.smartshub.dev/0xbot
+ *
+ * 0xBot is licensed under the MIT License.
+ */
+
 import { Client, Events, GatewayIntentBits, Collection } from 'discord.js';
 import fs from 'node:fs';
 import path from 'node:path';
@@ -24,7 +34,6 @@ const loadModulesFromBase = async (basePath) => {
   for (const moduleFolder of moduleFolders) {
     const modulePath = path.join(basePath, moduleFolder);
 
-    // --- Cargar comandos ---
     const commandsPath = path.join(modulePath, 'commands');
     if (fs.existsSync(commandsPath) && fs.statSync(commandsPath).isDirectory()) {
       const commandFiles = fs.readdirSync(commandsPath).filter(file => file.endsWith('.js'));
@@ -46,7 +55,6 @@ const loadModulesFromBase = async (basePath) => {
       }
     }
 
-    // --- Cargar eventos ---
     const eventsPath = path.join(modulePath, 'events');
     if (fs.existsSync(eventsPath) && fs.statSync(eventsPath).isDirectory()) {
       const eventFiles = fs.readdirSync(eventsPath).filter(file => file.endsWith('.js'));
@@ -81,11 +89,8 @@ const loadModulesFromBase = async (basePath) => {
 export const init = async () => {
   main();
   await loadModulesFromBase(path.join(import.meta.dirname, '../../modules'));
-
-
   await client.login(config.token);
 };
-
 
 
 export const discord_client = client;

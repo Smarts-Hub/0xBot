@@ -1,3 +1,14 @@
+/*
+ * 0xBot - Fully modular discord bot 
+ *
+ * * This bot offers the ability to create a discord bot fully customizable through modules.
+ * * You can get information about the bot's functionality and how to use it in the documentation.
+ *   * https://docs.smartshub.dev/0xbot
+ *
+ * 0xBot is licensed under the MIT License.
+ */
+
+
 import logger from "./core/logger.js";
 import fs from "node:fs";
 import path from "node:path";
@@ -30,8 +41,8 @@ if (!fs.existsSync(destinationConfigFile)) {
 start()
 
 async function start() {
-    await run();
     logger.debug("Debug is enabled! Showing debug information.");
+    await run();
     await init();
 }
 
