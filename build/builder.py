@@ -1,38 +1,40 @@
 import os
 import zipfile
 
+def add_folder_to_zip(zipf, folder_path, arc_path=""):
+    """Agrega archivos de folder_path a un zip"""
+    for root, _, files in os.walk(folder_path):
+        for file in files:
+            file_path = os.path.join(root, file)
+            rel_path = os.path.join(arc_path, os.path.relpath(file_path, folder_path))
+            zipf.write(file_path, rel_path)
+
 def main():
-    # Pedir versión al usuario
     version = input("Introduce la versión de 0xBot: ").strip()
     if not version:
         print("Error: debes introducir una versión válida.")
         return
 
-    # Rutas
     base_dir = os.path.dirname(os.path.abspath(__file__))
-    core_dir = os.path.join(base_dir, '../core')
-    modules_dir = os.path.join(base_dir, '../modules')
-    dist_dir = os.path.join(base_dir, '../dist')
+    root_dir = os.path.join(base_dir, "../")
+    core_dir = os.path.join(base_dir, "../core")
+    modules_dir = os.path.join(base_dir, "../modules")
+    dist_dir = os.path.join(base_dir, "../dist")
 
-    # Crear dist si no existe
     os.makedirs(dist_dir, exist_ok=True)
+    zip_filename = os.path.join(dist_dir, f"0xbot_{version}.zip")
 
-    # Nombre del archivo zip
-    zip_filename = os.path.join(dist_dir, f'0xbot_{version}.zip')
+    with zipfile.ZipFile(zip_filename, "w", zipfile.ZIP_DEFLATED) as zipf:
+        # Agregar core/ y modules/
+        add_folder_to_zip(zipf, core_dir, "core")
+        add_folder_to_zip(zipf, modules_dir, "modules")
 
-    with zipfile.ZipFile(zip_filename, 'w', zipfile.ZIP_DEFLATED) as zipf:
-        # Función para agregar archivos de una carpeta
-        def add_folder_to_zip(folder_path, arc_path=""):
-            for root, _, files in os.walk(folder_path):
-                for file in files:
-                    file_path = os.path.join(root, file)
-                    # Ruta dentro del zip
-                    rel_path = os.path.join(arc_path, os.path.relpath(file_path, folder_path))
-                    zipf.write(file_path, rel_path)
-
-        # Agregar core y modules
-        add_folder_to_zip(core_dir, "core")
-        add_folder_to_zip(modules_dir, "modules")
+        # Agregar archivos raíz
+        root_files = ["index.js", "package.json", "package-lock.json", "README.md"]
+        for file in root_files:
+            file_path = os.path.join(root_dir, file)
+            if os.path.exists(file_path):
+                zipf.write(file_path, file)
 
     print(f"✅ Comprimido creado en: {zip_filename}")
 
