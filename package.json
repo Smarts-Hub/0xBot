@@ -17,6 +17,8 @@
     "discord-gamecord": "^4.4.2",
     "discord.js": "^14.21.0",
     "js-yaml": "^4.1.0",
+    "mongodb": "^6.19.0",
+    "mongoose": "^8.18.0",
     "valuesaver": "^1.9.3"
   }
 }
