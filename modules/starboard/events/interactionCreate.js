@@ -27,7 +27,7 @@ export default {
             const message = await interaction.channel.messages.fetch(messageId);
 
             if (!message) {
-                await interaction.reply({ content: "❌ No se pudo encontrar el mensaje.", ephemeral: true });
+                await interaction.reply({ content: "❌ Could not find the message.", ephemeral: true });
                 return;
             }
 
@@ -39,13 +39,13 @@ export default {
                 const number = parseInt(match[1], 10);
                 message.edit(message.content.replace(`**${number}**`, `**${number + 1}**`))
                 interaction.reply({
-                    content: "Star added!",
+                    content: yamlConfig.starboard["interaction-message"] ?? "Star added!",
                     ephemeral: true
                 })
             }
         } catch (err) {
-            logger.error(`Error al obtener el mensaje: ${err.message}`);
-            await interaction.reply({ content: "⚠️ Hubo un error al obtener el mensaje.", ephemeral: true });
+            logger.error(`Error retrieving starboard message: ${err.message}`);
+            await interaction.reply({ content: "❌ There was an error while retrieving the message.", ephemeral: true });
         }
     },
 };

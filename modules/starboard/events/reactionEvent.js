@@ -19,7 +19,7 @@ export default {
             try {
                 await reaction.fetch();
             } catch (err) {
-                console.error("❌ Error fetching reaction:", err);
+                console.error("Error fetching reaction:", err);
                 return;
             }
         }
@@ -36,7 +36,7 @@ export default {
             const starboardChannel = message.guild.channels.cache.get('1388256659154927717');
             if (starboardChannel) {
                 const embed = new EmbedBuilder()
-                    .setColor(yamlConfig.starboard["starboard-embed-color"] || 0xffd700)
+                    .setColor(yamlConfig.starboard.embed["starboard-embed-color"] || 0xffd700)
                     .setAuthor({
                         name: message.author.tag,
                         iconURL: message.author.displayAvatarURL(),
