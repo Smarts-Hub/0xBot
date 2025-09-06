@@ -1,0 +1,7 @@
+{
+    "name": "Moderation",
+    "version": "1.0.0",
+    "author": "jallox",
+    "main": "index.js",
+    "description": "Simple easy to use moderation system, with features such as warn, mute, or ban. Take control of your server with ease."
+}
