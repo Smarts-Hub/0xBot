@@ -1,0 +1,10 @@
+starboard:
+  # How many reactions are required for a message to be posted to the starboard
+  starboard-reactions-required: 2
+  # The channel ID where starboard messages will be posted
+  starboard-channel-id: 1388256659154927717
+  # Whether to include the original message's attachments in the starboard post
+  include-attachments: true
+  
+  starboard-embed:
+
