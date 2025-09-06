@@ -1,6 +1,6 @@
 {
     "name": "Starboard",
-    "version": "1.0",
+    "version": "1.0.0",
     "author": "jallox",
     "main": "index.js",
     "description": "Save the best chat messages to a virtual musseum"

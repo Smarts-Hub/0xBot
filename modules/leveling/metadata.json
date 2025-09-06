@@ -1,6 +1,6 @@
 {
     "name": "Leveling",
-    "version": "1.0",
+    "version": "1.0.0",
     "author": "jallox",
     "main": "index.js",
     "description": "Add a leveling system to your Discord bot! With many features and customization options, you can create a unique experience for your server members and boost your channels."
