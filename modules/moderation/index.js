@@ -22,7 +22,7 @@ let yamlConfig;
 export async function run(apiInstance) {
     api = apiInstance;
     yamlConfig = await yaml.load(await fs.readFile(path.resolve(__dirname, "config.yml"), "utf8"));
-    if(!yamlConfig?.moderations) {
+    if(!yamlConfig?.moderation) {
         logger.error("Yaml configuration for this resource is not valid!")
     }
 }
