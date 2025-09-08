@@ -24,7 +24,7 @@ leveling:
 
   # Used to calculate the required xp to level up
   # Higher numbers make leveling up more complicated
-  xp-threshold: 10000
+  xp-threshold: 2000
   # The user will recieve a random amount between theese values
   min-xp: 1
   max-xp: 10

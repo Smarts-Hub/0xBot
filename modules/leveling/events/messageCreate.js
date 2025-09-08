@@ -8,12 +8,6 @@
  * 0xBot is licensed under the MIT License.
  */
 
-/*
- * 0xBot - Leveling system with ValueSaver
- *
- * Gives users XP for messages and broadcasts level-ups using persistent storage.
- */
-
 
 import { Events, EmbedBuilder } from "discord.js";
 import { yamlConfig } from "../index.js";

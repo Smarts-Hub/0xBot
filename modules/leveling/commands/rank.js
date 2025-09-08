@@ -15,7 +15,6 @@ export default {
     async execute(interaction) {
         const target = interaction.options.getUser("user") || interaction.user;
 
-        // Buscar datos en la DB
         let userData = await UserLevel.findOne({ userId: target.id });
 
         if (!userData) {
@@ -25,7 +24,6 @@ export default {
             });
         }
 
-        // Calcular XP para el próximo nivel
         const thresholdXp = yamlConfig?.leveling?.["xp-threshold"] ?? 1000;
         const xpNeeded = Math.floor(((userData.level + 1) * thresholdXp));
         const progress = Math.floor((userData.xp / xpNeeded) * 100);
