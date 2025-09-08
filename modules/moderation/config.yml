@@ -28,3 +28,11 @@ moderation:
       color: "#F58027"
       title: "You got muted!"
       description: "You got a mute for the reason: ```{reason}```"
+  ban:
+    embed:
+      color: "#F58027"
+      title: "User muted"
+    user-embed:
+      color: "#F58027"
+      title: "You got muted!"
+      description: "You got a mute for the reason: ```{reason}```"
