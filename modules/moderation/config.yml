@@ -8,3 +8,15 @@ moderation:
       color: "#F58027"
       title: "You got warned!"
       description: "You got a warn for the reason: ```{reason}```"
+  warnlist:
+      embed:
+        color: "#F58027"
+        title: "User warn"
+        fields-title:
+          reason: "Reason"
+          moderator: "Moderator ID"
+          date: "Date"
+      buttons:
+        prev: "Previous"
+        next: "Next"
+      cant-use-buttons: "You can't use these buttons"
