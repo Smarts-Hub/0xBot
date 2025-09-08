@@ -1,5 +1,5 @@
 import { SlashCommandBuilder, EmbedBuilder, PermissionFlagsBits } from "discord.js";
-import Warns from "../models/WarnsSchema.js";
+import Warns from "../models/Warns.js";
 import { yamlConfig } from "../index.js"
 
 export default {

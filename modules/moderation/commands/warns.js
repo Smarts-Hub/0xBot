@@ -1,4 +1,5 @@
-import { EmbedBuilder, PermissionFlagsBits, SlashCommandBuilder, ActionRowBuilder, ButtonBuilder, ButtonStyle, ComponentType } from 'discord.js';import Warns from "../models/WarnsSchema.js";
+import { EmbedBuilder, PermissionFlagsBits, SlashCommandBuilder, ActionRowBuilder, ButtonBuilder, ButtonStyle, ComponentType } from 'discord.js';
+import Warns from "../models/Warns.js";
 import { yamlConfig } from "../index.js"
 
 export default {
