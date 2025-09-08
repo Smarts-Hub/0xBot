@@ -1,9 +1,10 @@
 moderation:
   logs-channel: "1388256659154927717"
-  embed:
-    color: "#F58027"
-    title: "User warned"
-  user-embed:
-    color: "#F58027"
-    title: "You got warned!"
-    description: "You got a warn for the reason: ```{reason}```"
+  warns:
+    embed:
+      color: "#F58027"
+      title: "User warned"
+    user-embed:
+      color: "#F58027"
+      title: "You got warned!"
+      description: "You got a warn for the reason: ```{reason}```"

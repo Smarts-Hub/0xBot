@@ -32,8 +32,8 @@ export default {
 
         const channel = await interaction.guild.channels.cache.get(yamlConfig.moderation["logs-channel"]);
         const embed = new EmbedBuilder()
-            .setColor(yamlConfig.moderation.embed.color ?? 'Orange')
-            .setTitle(yamlConfig.moderation.embed.title ?? "You warned a user")
+            .setColor(yamlConfig.moderation.warns.embed.color ?? 'Orange')
+            .setTitle(yamlConfig.moderation.warns.embed.title ?? "You warned a user")
             .setDescription(`**Reason:**\`\`\`${reason}\`\`\``)
             .addFields(
                 { name: "User", value: `${user} (${user.id})`},
@@ -42,9 +42,9 @@ export default {
             .setTimestamp();
 
         const usrEmbed = new EmbedBuilder()
-            .setColor(yamlConfig.moderation["user-embed"].color ?? 'Orange')
-            .setTitle(yamlConfig.moderation["user-embed"].title ?? "You got warned!")
-            .setDescription(yamlConfig.moderation["user-embed"].description.replace(`{reason}`, reason))
+            .setColor(yamlConfig.moderation.warns["user-embed"].color ?? 'Orange')
+            .setTitle(yamlConfig.moderation.warns["user-embed"].title ?? "You got warned!")
+            .setDescription(yamlConfig.moderation.warns["user-embed"].description.replace(`{reason}`, reason))
             .setAuthor({ name: interaction.user.username, iconURL: interaction.user.displayAvatarURL() })
             .setTimestamp();
 
