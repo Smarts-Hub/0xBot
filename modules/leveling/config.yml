@@ -1,16 +1,12 @@
 leveling:
-  # Add here as many channels as you need
-  # Theese channels IDs will be ignored when the user writes a message
+
   disallowed-channels:
     - 123456789123456
     - 000000000000000
 
-  # Should the bot broadcast level-ups?
   broadcast-level-up: true
-  # Where should the bot broadcast level-ups?
-  # To reply to the user message, use `reply`, else specify a channel ID
-  #levelup-broadcast-channel: 12345678901234
-  levelup-broadcast-channel: reply
+
+  levelup-broadcast-channel: reply # or a custom channel ID
 
   broadcast-level-up-embed:
     title: "You got a new level!"
@@ -22,10 +18,7 @@ leveling:
     thumbnail:
       url: "{user.avatar_url}"
 
-  # Used to calculate the required xp to level up
-  # Higher numbers make leveling up more complicated
-  xp-threshold: 2000
-  # The user will recieve a random amount between theese values
+  xp-threshold: 2000 # Formula: required-xp = user-level * xp-threshold
   min-xp: 1
   max-xp: 10
 

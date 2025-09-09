@@ -1,7 +1,5 @@
 starboard:
-  # How many reactions are required for a message to be posted to the starboard
   starboard-reactions-required: 2
-  # The channel ID where starboard messages will be posted
   starboard-channel-id: 1388256659154927717
   embed:
     starboard-embed-color: "#ffd700"
