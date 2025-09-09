@@ -8,44 +8,46 @@
  * 0xBot is licensed under the MIT License.
  */
 
-
-import logger from "./core/logger.js";
 import fs from "node:fs";
 import path from "node:path";
-import { run } from "./core/modules/loader.js";
-import { init } from "./core/bot/client.js";
-import {connectMongoose} from "./core/storage/mongodb.js";
+import { fileURLToPath } from "node:url";
 
+const __filename = fileURLToPath(import.meta.url);
+const __dirname = path.dirname(__filename);
 
-logger.info("Starting 0xBot...");
+const modulesDir = path.join(__dirname, "modules");
+const configDir = path.join(__dirname, "config");
 
-const modulesDir = path.join("modules");
-const configDir = path.join("config");
-
-const defaultConfigFile = path.join("core/assets/config.json");
+const defaultConfigFile = path.join(__dirname, "core/assets/config.json");
 const destinationConfigFile = path.join(configDir, "config.json");
 
 if (!fs.existsSync(modulesDir)) {
     fs.mkdirSync(modulesDir, { recursive: true });
-    logger.debug("Created ./modules directory.");
+} else {
+    const files = fs.readdirSync(modulesDir);
+    if (files.length > 0) {
+        console.log(`Modules folder already has ${files.length} file(s), skipping creation.`);
+    }
 }
 
 if (!fs.existsSync(configDir)) {
     fs.mkdirSync(configDir, { recursive: true });
-    logger.debug("Created ./config directory.");
 }
 
 if (!fs.existsSync(destinationConfigFile)) {
     fs.copyFileSync(defaultConfigFile, destinationConfigFile);
-    logger.debug("Copied default config.js to ./config/");
 }
 
-start()
+start();
 
 async function start() {
+    const logger = (await import("./core/logger.js")).default;
+    const { run } = await import("./core/modules/loader.js");
+    const { init } = await import("./core/bot/client.js");
+    const { connectMongoose } = await import("./core/storage/mongodb.js");
+
     logger.debug("Debug is enabled! Showing debug information.");
     await connectMongoose();
     await run();
     await init();
 }
-
