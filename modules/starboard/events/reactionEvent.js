@@ -1,12 +1,3 @@
-/*
- * 0xBot Starboard addon
- *
- * * This addon adds your bot a Starboard system
- * * You can get information about the bot's functionality and how to use it in the documentation.
- *   * https://docs.smartshub.dev/0xbot
- *
- * This addon is licensed under the MIT License.
- */
 
 import { ActionRowBuilder, ButtonStyle, EmbedBuilder, Events } from "discord.js";
 import { yamlConfig } from "../index.js";

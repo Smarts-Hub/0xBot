@@ -1,12 +1,3 @@
-/*
- * 0xBot Moderation addon
- *
- * * This addon adds your bot a Leveling system
- * * You can get information about the bot's functionality and how to use it in the documentation.
- *   * https://docs.smartshub.dev/0xbot
- *
- * This addon is licensed under the MIT License.
- */
 import path from "node:path";
 import { fileURLToPath } from "node:url";
 
