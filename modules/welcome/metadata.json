@@ -1,0 +1,7 @@
+{
+    "name": "Welcome",
+    "version": "1.0.0",
+    "author": "jallox",
+    "main": "index.js",
+    "description": "Say Welcome to the new integrants of your server. With customizable images, messages, and channels"
+}

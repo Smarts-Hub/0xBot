@@ -1,0 +1,25 @@
+welcome:
+  type: embed+image # or only `embed`
+  channel: "1272121923102572547"
+  embed:
+    color: '#00e569'
+    title: "🎉 Welcome {user}!"
+    description: "Welcome to our new server! You are seeing this message because 0xbot offers the hability to welcome you automatically."
+    fields:
+    - name: "Visit rules"
+      text: "Remember to visit #rules to get a quick view!"
+      inline: false
+    - name: "Read announcements"
+      text: "Subscribe and add your discord server to follow the latest updates!"
+      inlinte: false
+    - name: "Take a look to new modules"
+      text: "Visit 0xbot.smartshub.dev/addons to get a quick view of the addons available!"
+      inline: false
+    show-author: true
+    show-timestamp: true
+  
+  image:
+    background-image-url: "https://getwallpapers.com/wallpaper/full/3/a/6/1024020-beautiful-dark-green-background-1920x1080-iphone.jpg" # Replace
+    title: "Welcome {user}!"
+    subtitle: "Welcome to our new server \nusing 0xbot"
+

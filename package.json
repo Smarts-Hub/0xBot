@@ -12,6 +12,7 @@
   "license": "MIT",
   "packageManager": "npm@10.11.0",
   "dependencies": {
+    "@napi-rs/canvas": "^0.1.79",
     "adm-zip": "^0.5.16",
     "chalk": "^5.4.1",
     "discord-gamecord": "^4.4.2",
