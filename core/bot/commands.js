@@ -43,7 +43,7 @@ const loadCommandsFromTmpModules = async (basePath) => {
             if ('data' in command.default && 'execute' in command.default) {
               commands.push(command.default.data.toJSON());
             } else {
-              logger.warn(`Command at ${filePath} is missing required "data" or "execute".`);
+              logger.error(`Command at ${filePath} is missing required "data" or "execute".`);
             }
           } catch (err) {
             logger.error(`Failed to load command at ${filePath}: ${err}`);

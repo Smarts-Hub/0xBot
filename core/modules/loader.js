@@ -11,7 +11,7 @@
 import fs from 'fs/promises';
 import path from 'path';
 import logger from "../logger.js";
-import {discord_client} from "../bot/client.js";
+import { discord_client } from "../bot/client.js";
 import { pathToFileURL } from 'url';
 import config from "../../config/config.json" with { type: "json" };
 import { installPackage } from './installer.js';
@@ -39,14 +39,14 @@ export async function run() {
 
         const mainPath = path.join(modulePath, metadata.main);
         const module = await import(pathToFileURL(mainPath).href);
-        
-        logger.info("Loaded module " + moduleName + " by " + author);
+
         moduleList.push(moduleName)
         moduleMetadataList.push(metadata)
         if (typeof module.run === 'function') {
             module.run(createApi(moduleName));
-            
         }
+        logger.info("Loaded module " + moduleName + " by " + author);
+
     }
 }
 

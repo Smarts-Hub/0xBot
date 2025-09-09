@@ -36,7 +36,7 @@ const loadModulesFromBase = async (basePath) => {
   if (!fs.existsSync(basePath)) return;
 
   const moduleFolders = fs.readdirSync(basePath);
-  logger.debug(`Found module folders: ${moduleFolders.join(', ')}`);
+  logger.debug(`Found module(s): ${moduleFolders.join(', ')}`);
 
   for (const moduleFolder of moduleFolders) {
     const modulePath = path.join(basePath, moduleFolder);
@@ -54,7 +54,7 @@ const loadModulesFromBase = async (basePath) => {
           if ('data' in command && 'execute' in command) {
             client.commands.set(command.data.name, command); // Registra en el cliente
           } else {
-            logger.warn(`Command at ${filePath} is missing "data" or "execute".`);
+            logger.error(`Command at ${filePath} is missing "data" or "execute".`);
           }
         } catch (err) {
           logger.error(`Failed to load command at ${filePath}: ${err}`);
@@ -73,7 +73,7 @@ const loadModulesFromBase = async (basePath) => {
           const event = eventModule.default;
 
           if (!event || !event.name || typeof event.execute !== 'function') {
-            logger.warn(`Event at ${filePath} is missing "name" or "execute" property.`);
+            logger.error(`Event at ${filePath} is missing "name" or "execute" property.`);
             continue;
           }
 

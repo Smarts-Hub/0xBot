@@ -9,8 +9,11 @@
  */
 
 import { spawn } from "child_process";
+import logger from "../logger.js";
 
 export async function restart() {
+  logger.info("Attempting to restart");
+  logger.warn("This is not supported (yet) in many environments!")
   const args = process.argv.slice(1); 
   const cmd = process.argv[0]; 
 
