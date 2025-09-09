@@ -50,23 +50,13 @@ export async function run() {
     }
 }
 
-export async function getModuleConfig(moduleName) {
-    const configPath = path.join(CONFIG_DIR, `${moduleName}_config.json`);
-    try {
-        const configRaw = await fs.readFile(configPath, 'utf-8');
-        return JSON.parse(configRaw);
-    } catch (err) {
-        logger.warn(`Could not load config for module ${moduleName}`);
-        return null;
-    }
-}
+
 
 function createApi(moduleName) {
     return {
         logger: logger,
         client: discord_client,
         config,
-        resourceConfig: getModuleConfig(moduleName),
         moduleList,
         moduleMetadataList,
         installPackage,
