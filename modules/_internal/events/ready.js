@@ -9,10 +9,16 @@
  */
 
 import { Events, MessageFlags } from "discord.js";
+import logger from "../../../core/logger.js"
 
 export default {
     name: Events.ClientReady,
     async execute(client) {
-        console.log("Bot is ready!");
+        logger.success("Bot has succesfully logged in!")
+        logger.info(` * Client name: ${client.user.username}`)
+        logger.info(` * Client guilds: ${client.guilds.cache.size}`)
+        if(client.guilds.cache.size > 1) {
+            logger.warn(` ! Warning: you are running the bot in two or more servers! Please note that this might cause problems in modules!`)
+        }
     },
 };
