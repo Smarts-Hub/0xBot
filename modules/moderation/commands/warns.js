@@ -29,12 +29,13 @@ export default {
 
         const generateEmbed = (index) => {
             const warn = userWarns[index];
+            const date = new Date(warn.timestamp);
             return new EmbedBuilder()
                 .setTitle(`${yamlConfig.moderation.warnlist.embed.title} ${index + 1}/${userWarns.length}`)
                 .addFields(
                     { name: yamlConfig.moderation.warnlist.embed["fields-title"].reason, value: warn.reason, inline: false },
-                    { name: yamlConfig.moderation.warnlist.embed["fields-title"].moderator, value: warn.moderatorId, inline: true },
-                    { name: `\`${yamlConfig.moderation.warnlist.embed["fields-title"].date}\``, value: warn.timestamp.toString(), inline: true }
+                    { name: yamlConfig.moderation.warnlist.embed["fields-title"].moderator, value: `<@${warn.moderatorId}> (\`${warn.moderatorId}\`)`, inline: true },
+                    { name: yamlConfig.moderation.warnlist.embed["fields-title"].date, value: `<t:${Math.floor(date.getTime() / 1000)}:F>`, inline: true }
                 )
                 .setColor(yamlConfig.moderation.warnlist.embed.color)
                 .setTimestamp();

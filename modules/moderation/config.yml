@@ -14,7 +14,7 @@ moderation:
         title: "User warn"
         fields-title:
           reason: "Reason"
-          moderator: "Moderator ID"
+          moderator: "Moderator"
           date: "Date"
       buttons:
         prev: "Previous"
