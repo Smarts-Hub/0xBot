@@ -1,0 +1,7 @@
+{
+    "name": "Embeds",
+    "version": "1.0.0",
+    "author": "jallox",
+    "main": "index.js",
+    "description": "Send fully customizable embeds to your server channels."
+}
