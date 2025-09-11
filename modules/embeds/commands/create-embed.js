@@ -23,6 +23,8 @@ export default {
       });
     }
 
+    let collector;
+
     let embed = new EmbedBuilder()
       .setTitle("*Title not set*")
       .setDescription("*Description not set*");
@@ -98,7 +100,7 @@ export default {
       ephemeral: true,
     });
 
-    const collector = interaction.channel.createMessageComponentCollector({
+    collector = interaction.channel.createMessageComponentCollector({
       time: 5 * 60 * 1000,
     });
 
@@ -189,6 +191,7 @@ export default {
             content: `✅ Embed sent to <#${channelId}>`,
             ephemeral: true,
           });
+          collector.stop();
         }
       } catch (error) {
         console.error("Modal handling error:", error);
