@@ -10,6 +10,7 @@
   "keywords": [],
   "author": "SmartsHub, Jallox",
   "license": "MIT",
+  "types": "types/module.d.ts",
   "packageManager": "npm@10.11.0",
   "dependencies": {
     "@napi-rs/canvas": "^0.1.79",
