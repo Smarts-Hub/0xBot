@@ -9,21 +9,33 @@ export interface Logger {
   error(message: string): void;
 }
 
-/** Main API received by modules on run() */
+/** 
+ * Main API received by modules on run() 
+ */
 export interface ModuleApi {
-  /** Logger */
+  /** 
+   * Logger 
+   */
   logger: Logger;
 
-  /** Discord.js Client */
+  /** 
+   * Discord.js Client 
+   */
   client: Client;
 
-  /** Global configuration */
+  /** 
+   * Global configuration 
+   */
   config: Record<string, any>;
 
-  /** Loaded module list */
+  /** 
+   * Loaded module list 
+   */
   moduleList: string[];
 
-  /** Module metadata list */
+  /**
+   * Module metadata list 
+   */
   moduleMetadataList: Array<Record<string, any>>;
 
   /**
