@@ -13,15 +13,15 @@
   "types": "types/module.d.ts",
   "packageManager": "npm@10.11.0",
   "dependencies": {
-    "@napi-rs/canvas": "^0.1.79",
-    "adm-zip": "^0.5.16",
-    "chalk": "^5.4.1",
-    "discord-gamecord": "^4.4.2",
-    "discord.js": "^14.21.0",
-    "js-yaml": "^4.1.0",
-    "mongodb": "^6.19.0",
-    "mongoose": "^8.18.0",
-    "valuesaver": "^1.9.3"
+    "@napi-rs/canvas": "0.1.79",
+    "adm-zip": "0.5.16",
+    "chalk": "5.4.1",
+    "discord-gamecord": "4.4.2",
+    "discord.js": "14.21.0",
+    "js-yaml": "4.1.0",
+    "mongodb": "6.19.0",
+    "mongoose": "8.18.0",
+    "valuesaver": "1.9.3"
   },
   "imports": {
     "#logger": "./core/logger.js",
