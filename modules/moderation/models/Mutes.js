@@ -24,4 +24,4 @@ const MutesSchema = new mongoose.Schema({
     }
 });
 
-export default mongoose.model("Mutes", MutesSchema);
+export default mongoose.models.Mutes || mongoose.model("Mutes", MutesSchema);

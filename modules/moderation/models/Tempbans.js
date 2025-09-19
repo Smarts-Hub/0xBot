@@ -24,4 +24,4 @@ const BansSchema = new mongoose.Schema({
     }
 });
 
-export default mongoose.model("Bans", BansSchema);
+export default mongoose.models.TempBans || mongoose.model("TempBans", BansSchema);

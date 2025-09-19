@@ -20,4 +20,4 @@ const WarnsSchema = new mongoose.Schema({
     }
 });
 
-export default mongoose.model("Warns", WarnsSchema);
+export default mongoose.models.Warns || mongoose.model("Warns", WarnsSchema);
