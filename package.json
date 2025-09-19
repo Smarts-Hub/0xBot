@@ -21,6 +21,7 @@
     "js-yaml": "4.1.0",
     "mongodb": "6.19.0",
     "mongoose": "8.18.0",
+    "node-cron": "^4.2.1",
     "valuesaver": "1.9.3"
   },
   "imports": {

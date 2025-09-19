@@ -1,0 +1,22 @@
+suggestions:
+  suggestion-channel: "1373729023577817131"
+  success-message: "✅ Your suggestion has been submitted to {channel}!"
+  admin-role: "1373728985472565431"
+  
+  embed:
+    author: "Suggestion from {user}"
+    color: "#00e269"
+    footer: "0xBot Module - Suggestion System by xInsso"
+  
+  buttons:
+    upvote:
+      label: "Upvote"
+      emoji: "👍"
+    downvote:
+      label: "Downvote"
+      emoji: "👎"
+  
+  log-channel: "1234657890123456789"
+  log-embed:
+    title: "New Suggestion"
+    color: "#0099ff"

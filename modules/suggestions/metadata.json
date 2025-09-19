@@ -1,0 +1,7 @@
+{
+    "name": "Suggestions Module",
+    "version": "1.0.0",
+    "author": "xInsso, Maintenance by Jallox",
+    "main": "index.js",
+    "description": "Suggestion system with configurable /suggest via YAML, customizable embeds, voting buttons, and automatic channel protection."
+}
