@@ -12,7 +12,6 @@ let api;
 
 export function run(apiInstance) {
   api = apiInstance;
-  api.logger.info("[INTERNAL] Module loaded");
 }
 
 export { api };
