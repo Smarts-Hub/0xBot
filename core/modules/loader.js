@@ -63,3 +63,13 @@ function createApi(moduleName) {
         restart
     };
 }
+
+export const api = {
+    logger: logger,
+    client: discord_client,
+    config,
+    moduleList,
+    moduleMetadataList,
+    installPackage,
+    restart
+}
