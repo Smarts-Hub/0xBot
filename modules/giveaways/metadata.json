@@ -1,0 +1,7 @@
+{
+    "name": "Giveaways",
+    "version": "1.0.0",
+    "author": "jallox",
+    "main": "index.js",
+    "description": "Simple and easy to use giveaway system."
+}
