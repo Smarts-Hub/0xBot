@@ -14,8 +14,8 @@ export default {
     async execute(interaction) {
         const suggestion = interaction.options.getString("suggestion");
         const config = yamlConfig?.suggestions || {};
-        
         const suggestionChannelId = config["suggestion-channel"];
+
         if (!suggestionChannelId) {
             return interaction.reply({
                 content: "❌ The suggestion system is not configured properly.",
@@ -23,31 +23,29 @@ export default {
             });
         }
 
-        const suggestionChannel = interaction.guild.channels.cache.get(suggestionChannelId);
-        if (!suggestionChannel) {
+        let suggestionChannel;
+        try {
+            suggestionChannel = await interaction.guild.channels.fetch(suggestionChannelId);
+        } catch {
             return interaction.reply({
                 content: "❌ Suggestion channel not found. Please contact an administrator.",
                 ephemeral: true
             });
         }
 
-        // Crear embed con contadores de votos
         const suggestionEmbed = new EmbedBuilder()
             .setAuthor({ 
-                name: config?.embed?.author?.replace("{user}", interaction.user.username) || `Suggestion from ${interaction.user.username}`,
-                iconURL: interaction.user.displayAvatarURL()
+                name: config?.embed?.author?.replace("{user}", interaction.user.username) || `# NEW SUGGESTION | ${interaction.user.username}`,
             })
+            .setThumbnail(interaction.user.displayAvatarURL())
             .setDescription(suggestion)
-            .setColor(config?.embed?.color || "#5865F2")
+            .setColor(config?.embed?.color || "#58f258")
             .setFooter({ 
                 text: config?.embed?.footer?.replace("{user}", interaction.user.username) || `Suggested by ${interaction.user.username}` 
             })
-            .addFields(
-                { name: "Votes", value: "👍 0 | 👎 0", inline: true }
-            )
+            .addFields({ name: "Votes", value: "👍 0 | 👎 0", inline: true })
             .setTimestamp();
 
-        // Crear botones
         const row = new ActionRowBuilder()
             .addComponents(
                 new ButtonBuilder()
@@ -68,13 +66,16 @@ export default {
             );
 
         try {
-            const message = await suggestionChannel.send({
-                embeds: [suggestionEmbed],
-                components: [row]
+            const message = await suggestionChannel.send({ embeds: [suggestionEmbed], components: [row] });
+
+            const thread = await message.startThread({
+                name: `Discussion - ${interaction.user.username}`,
+                autoArchiveDuration: 1440,
+                reason: `Thread created for suggestion by ${interaction.user.username}`,
             });
 
             await interaction.reply({
-                content: config["success-message"]?.replace("{channel}", suggestionChannel.toString()) || `✅ Your suggestion has been submitted to ${suggestionChannel}!`,
+                content: config["success-message"]?.replace("{channel}", `<#${suggestionChannelId}>`) || `✅ Your suggestion has been submitted to ${suggestionChannel}!`,
                 ephemeral: true
             });
 

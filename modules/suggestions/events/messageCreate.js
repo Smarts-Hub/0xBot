@@ -16,7 +16,7 @@ export default {
                 
                 const warningMessage = await message.channel.send({
                     content: `❌ ${message.author}, please use \`/suggest\` to submit suggestions.`,
-                    ephemeral: false
+                    ephemeral: true
                 });
 
                 setTimeout(async () => {

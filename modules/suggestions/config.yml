@@ -1,10 +1,10 @@
 suggestions:
-  suggestion-channel: "1373729023577817131"
+  suggestion-channel: "1234657890123456789"
   success-message: "✅ Your suggestion has been submitted to {channel}!"
-  admin-role: "1373728985472565431"
+  admin-role: "1234657890123456789"
   
   embed:
-    author: "Suggestion from {user}"
+    author: "NEW SUGGESTION RECEIVED! | {user}"
     color: "#00e269"
     footer: "0xBot Module - Suggestion System by xInsso"
   
