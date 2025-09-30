@@ -49,7 +49,7 @@ export default {
             .setDescription(`**Reason:**\`\`\`${reason}\`\`\``)
             .addFields(
                 { name: "User", value: `${user} (${user.id})` },
-                { name: "Messages Deleted", value: `${deleteMessageDays} day(s)` }
+                { name: "Days banned", value: `${duration} day(s)` }
             )
             .setAuthor({ name: interaction.user.username, iconURL: interaction.user.displayAvatarURL() })
             .setTimestamp();
