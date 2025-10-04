@@ -20,15 +20,23 @@
     "discord-gamecord": "4.4.2",
     "discord-html-transcripts": "3.2.0",
     "discord.js": "14.21.0",
+    "form-data": "^4.0.4",
     "js-yaml": "4.1.0",
     "mongodb": "6.19.0",
     "mongoose": "8.18.0",
     "node-cron": "^4.2.1",
+    "node-fetch": "^3.3.2",
     "valuesaver": "1.9.3"
   },
   "imports": {
     "#logger": "./core/logger.js",
     "#client": "./core/bot/client.js",
     "#api": "./core/modules/loader.js"
+  },
+  "devDependencies": {
+    "esbuild": "^0.25.10",
+    "fs-extra": "^11.3.2",
+    "glob": "^11.0.3",
+    "javascript-obfuscator": "^4.1.1"
   }
 }

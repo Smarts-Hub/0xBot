@@ -6,3 +6,4 @@ core.zip
 
 # Premium modules excluded (don't ask why bruh)
 /modules/tickets/
+/dist-obf-bundle/
