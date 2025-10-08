@@ -69,11 +69,11 @@ export default {
       const embed = new EmbedBuilder()
         .setColor(welcome.embed.color)
         .setTitle(welcome.embed.title.replace("{user}", member.user.username))
-        .setDescription(welcome.embed.description)
+        .setDescription(welcome.embed.description.replace("{user}", member.user.username))
         .addFields(
           welcome.embed.fields.map((f) => ({
-            name: f.name,
-            value: f.text,
+            name: f.namereplace("{user}", member.user.username),
+            value: f.text.replace("{user}", member.user.username),
             inline: f.inline || false,
           })),
         );
