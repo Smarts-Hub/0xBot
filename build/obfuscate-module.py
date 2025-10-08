@@ -1,11 +1,6 @@
 #!/usr/bin/env python3
 """
-obfuscate-module.py - versión robusta + fallback automatico para archivos que no parsea
-
-- Intenta varios conjuntos de flags para javascript-obfuscator.
-- Si falla por opción desconocida, reintenta con conjuntos más conservadores.
-- Si falla por ERROR AT LINE / Unexpected token (parse error), copia el archivo sin obfuscar.
-- Permite --exclude para excluir archivos manualmente.
+obfuscate-module.py - custom module obfuscator
 """
 
 import argparse
@@ -36,35 +31,24 @@ def run_cmd_capture(cmd):
 def obfuscate_file_with_candidates(
     js_obfuscator_cmd, src_path: Path, dest_path: Path, candidates
 ):
-    """
-    Intenta ejecutar javascript-obfuscator con cada conjunto de flags.
-    Retorna una tupla (status, info):
-      - status == "ok"  -> info = flags_used_str
-      - status == "fail" -> info = last_error_str (no parse error)
-      - status == "parse_error" -> info = last_error_str (error de parseo detectado)
-    """
     dest_path.parent.mkdir(parents=True, exist_ok=True)
 
     last_err = None
     for flags in candidates:
         cmd = [js_obfuscator_cmd, str(src_path), "--output", str(dest_path)] + flags
         rc, out, err = run_cmd_capture(cmd)
-        # éxito
+        # Success
         if rc == 0:
             return "ok", " ".join(flags)
-        # error: miramos si stderr indica parse error
         combined = (out + "\n" + err).lower()
         if (
             "error at line" in combined
             or "unexpected token" in combined
             or "error in file" in combined
         ):
-            # consideramos esto un error de parseo (syntax/features no soportadas)
             last_err = f"parse_error: rc={rc} stdout={out.strip()} stderr={err.strip()}"
-            # no intentamos conjuntos aún más conservadores; devolvemos parse_error
             return "parse_error", last_err
         last_err = f"rc={rc} stdout={out.strip()} stderr={err.strip()}"
-        # sino seguimos intentanto con el siguiente candidato
 
     return "fail", last_err
 
@@ -109,23 +93,103 @@ def process_module(
     fallback_copy_count = 0
     errors = []
 
-    # candidatos de flags (agresivo -> conservador)
+    # flags (aggressive -> conservative)
     base_candidates = [
+        # vA— "aggresive"
         [
             "--compact",
             "true",
             "--self-defending",
-            "true",
+            "false",  # self-defending suele romper stacks / identidad
+            "--disable-console-output",
+            "false",  # mantener logs para depurar si algo falla
             "--string-array",
             "true",
             "--string-array-encoding",
-            "rc4",
+            "base64",  # menos "pesado"/latente que rc4
+            "--string-array-threshold",
+            "0.25",  # pocos strings a arreglo (evitar eventos)
+            "--string-array-wrappers-count",
+            "1",
+            "--string-array-wrappers-chained-calls",
+            "false",
+            "--split-strings",
+            "false",  # split-strings rompe literales como 'ready'
+            "--control-flow-flattening",
+            "false",  # CF flattening altera orden/timing
+            "--dead-code-injection",
+            "false",  # dead code puede ralentizar/desordenar
+            "--identifier-names-generator",
+            "mangled",  # mangled es suficiente, evita hexadecimal extremo
+            "--seed",
+            "2025",
+            # Reservar nombres críticos para que no sean renombrados (regex)
+            "--reserved-names",
+            "Client|login|on|once|emit|ready|module|exports|require|EventEmitter|messageCreate|interactionCreate",
+            # Asegurar que strings críticas no se metan en string-array
+            "--reserved-strings",
+            "ready|messageCreate|interactionCreate|guild|channel|message",
         ],
-        ["--compact", "true", "--self-defending", "true", "--string-array", "true"],
-        ["--compact", "true"],
+        # vB - "moderated"
+        [
+            "--compact",
+            "true",
+            "--self-defending",
+            "false",
+            "--disable-console-output",
+            "false",
+            "--string-array",
+            "true",
+            "--string-array-encoding",
+            "base64",
+            "--string-array-threshold",
+            "0.15",
+            "--string-array-wrappers-count",
+            "1",
+            "--string-array-wrappers-chained-calls",
+            "false",
+            "--split-strings",
+            "false",
+            "--control-flow-flattening",
+            "false",
+            "--dead-code-injection",
+            "false",
+            "--identifier-names-generator",
+            "mangled",
+            "--seed",
+            "1337",
+            "--reserved-names",
+            "Client|login|on|once|emit|ready|module|exports|require|EventEmitter|messageCreate|interactionCreate",
+            "--reserved-strings",
+            "ready|messageCreate|interactionCreate|guild|channel|message",
+        ],
+        # vC conservative / safe
+        [
+            "--compact",
+            "true",
+            "--self-defending",
+            "false",
+            "--disable-console-output",
+            "false",
+            "--string-array",
+            "false",  # evitar string arrays por completo
+            "--split-strings",
+            "false",
+            "--control-flow-flattening",
+            "false",
+            "--dead-code-injection",
+            "false",
+            "--identifier-names-generator",
+            "mangled",
+            "--seed",
+            "42",
+            "--reserved-names",
+            "Client|login|on|once|emit|ready|module|exports|require|EventEmitter|messageCreate|interactionCreate",
+            "--reserved-strings",
+            "ready|messageCreate|interactionCreate|guild|channel|message",
+        ],
     ]
 
-    # si el usuario pasó argumentos personalizados, los convertimos en lista plana
     user_args_flat = []
     for a in user_obf_args:
         user_args_flat += a.split()
@@ -156,7 +220,6 @@ def process_module(
                 obf_count += 1
                 print(f"  [OBFUSCATED] {rel}  (flags used: {info})")
             elif status == "parse_error":
-                # fallback seguro: copiamos el archivo sin obfuscar (para que el módulo siga funcionando)
                 try:
                     copy_file(src_path, dest_path)
                     fallback_copy_count += 1
@@ -171,7 +234,7 @@ def process_module(
                         f"  [ERROR] fallback copy failed for {rel}: {e}",
                         file=sys.stderr,
                     )
-            else:  # fail (otro tipo de error)
+            else:
                 errors.append((src_path, info))
                 print(f"  [ERROR OBFUSCATE] {rel} -> {info}", file=sys.stderr)
         else:
